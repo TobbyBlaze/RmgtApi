@@ -29,7 +29,7 @@ class tradeController extends Controller
             // 'user1'=>$user1,
             // 'user_id'=>$user_id,
             // 'user_name'=>$user_name,
-            'jrades'=>$trades,
+            'trades'=>$trades,
         ];
 
         return response()->json($data,200);
