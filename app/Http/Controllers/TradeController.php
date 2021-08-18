@@ -21,7 +21,7 @@ class tradeController extends Controller
         // $user_name = Auth::user()->name;
 
         $trades = Trade::orderBy('trades.updated_at', 'desc')
-        ->where('trades.user_id', $user->id)
+        // ->where('trades.user_id', $user->id)
         ->paginate(10);
 
         $data = [
