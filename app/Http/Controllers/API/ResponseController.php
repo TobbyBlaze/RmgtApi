@@ -6,10 +6,10 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Seller;
-use App\Admin;
-use App\Courier;
+use App\Models\User;
+use App\Models\Seller;
+use App\Models\Admin;
+// use App\Courier;
 
 class ResponseController extends Controller
 {
