@@ -54,6 +54,15 @@ Route::group([ 'prefix' => 'auth'], function (){
         Route::any('updatejournal/{id}', 'JournalController@update');
         Route::any('deletejournal/{id}', 'JournalController@destroy');
 
+        //Trades
+        Route::get('/', 'TradeController@index');
+        Route::get('trades', 'TradeController@index');
+        // Route::get('trades/{id}', 'TradelController@show');
+        // Route::resource('showtrades', 'TradeController');
+        // Route::post('storetrade', 'TradeController@store');
+        // Route::any('updatetrade/{id}', 'TradeController@update');
+        // Route::any('deletetrade/{id}', 'TradeController@destroy');
+
 
 
         //Reset password
