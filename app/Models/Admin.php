@@ -10,18 +10,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable, HasApiTokens, SoftDeletes;
     protected $dates = ['deleted_at'];
-
-    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+
+    protected $guard = 'admin';
+
     protected $fillable = [
         'name', 'last_name', 'email', 'password', 'active', 'activation_token'
     ];
@@ -43,21 +44,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function goods(){
-        return $this->hasMany('App\Good');
-    }
-
-    public function carts(){
-        return $this->hasMany('App\Cart');
-    }
-
-    public function orders(){
-        return $this->hasMany('App\Order');
-    }
-
-    public function reviews(){
-        return $this->hasMany('App\Review');
-    }
 
 }
