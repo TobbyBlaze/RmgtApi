@@ -103,6 +103,7 @@ class AuthController extends ResponseController
             }
             $user = $request->user();
             $success['token'] =  $user->createToken('token')->accessToken;
+            $success['status'] =  'user';
             return $this->sendResponse($success);
         }else{
             if(!Auth::guard('admin')->attempt($credentials)){
@@ -111,6 +112,7 @@ class AuthController extends ResponseController
             }
             $user = Auth::guard('admin')->user();
             $success['token'] =  $user->createToken('token')->accessToken;
+            $success['status'] =  'admin';
             return $this->sendResponse($success);
         }
     }
