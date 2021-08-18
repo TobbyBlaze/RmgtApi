@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+// use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\ResponseController as ResponseController;
@@ -24,7 +24,7 @@ use Stevebauman\Location\Facades\Location;
 class AuthController extends ResponseController
 {
 
-    use AuthenticatesUsers;
+    // use AuthenticatesUsers;
 
     //create user
     public function signup(Request $request)
