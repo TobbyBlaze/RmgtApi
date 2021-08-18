@@ -308,7 +308,7 @@ class AuthController extends ResponseController
         if($admin){
             $success['token'] =  $admin->createToken('token')->accessToken;
 
-            $admin->notify(new adminSignupActivate($admin));
+            // $admin->notify(new adminSignupActivate($admin));
 
             $success['message'] = "Registration successfull..";
             return $this->sendResponse($success);
