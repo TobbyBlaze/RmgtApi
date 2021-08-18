@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\ResponseController as ResponseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Seller;
-use App\Admin;
-use App\Courier;
+use App\Models\User;
+use App\Models\Seller;
+use App\Models\Admin;
+// use App\Courier;
 use Validator;
 
-use App\Notifications\SignupActivate;
-use App\Notifications\sellerSignupActivate;
-use App\Notifications\adminSignupActivate;
-use App\Notifications\courierSignupActivate;
+// use App\Notifications\SignupActivate;
+// use App\Notifications\sellerSignupActivate;
+// use App\Notifications\adminSignupActivate;
+// use App\Notifications\courierSignupActivate;
 
 use Stevebauman\Location\Facades\Location;
 
@@ -38,7 +38,7 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            return $this->sendError($validator->errors());       
+            return $this->sendError($validator->errors());
         }
 
         $input = $request->all();
@@ -49,18 +49,18 @@ class AuthController extends ResponseController
         if($user){
             $success['token'] =  $user->createToken('token')->accessToken;
 
-            $user->notify(new SignupActivate($user));
+            // $user->notify(new SignupActivate($user));
 
             $success['message'] = "Registration successfull..";
             return $this->sendResponse($success);
         }
         else{
             $error = "Sorry! Registration is not successfull.";
-            return $this->sendError($error, 401); 
+            return $this->sendError($error, 401);
         }
-        
+
     }
-    
+
     //login
     public function login(Request $request)
     {
@@ -70,14 +70,14 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            return $this->sendError($validator->errors());       
+            return $this->sendError($validator->errors());
         }
 
         $credentials = request(['email', 'password']);
 
         // $credentials['active'] = true;
         // $credentials['deleted_at'] = null;
-        
+
         if(!Auth::attempt($credentials)){
             $error = "Unauthorized";
             return $this->sendError($error, 401);
@@ -90,7 +90,7 @@ class AuthController extends ResponseController
     //logout
     public function logout(Request $request)
     {
-        
+
         $isUser = $request->user()->token()->revoke();
         if($isUser){
             $success['message'] = "Successfully logged out.";
@@ -100,8 +100,8 @@ class AuthController extends ResponseController
             $error = "Something went wrong.";
             return $this->sendResponse($error);
         }
-            
-        
+
+
     }
 
     //getuser
@@ -154,7 +154,7 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            return $this->sendError($validator->errors());       
+            return $this->sendError($validator->errors());
         }
 
         $input = $request->all();
@@ -205,11 +205,11 @@ class AuthController extends ResponseController
         }
         else{
             $error = "Sorry! Registration is not successfull.";
-            return $this->sendError($error, 401); 
+            return $this->sendError($error, 401);
         }
-        
+
     }
-    
+
     //login seller
     public function seller_login(Request $request)
     {
@@ -219,7 +219,7 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            return $this->sendError($validator->errors());       
+            return $this->sendError($validator->errors());
         }
 
         $credentials = request(['email', 'password']);
@@ -241,7 +241,7 @@ class AuthController extends ResponseController
     //logout seller
     public function seller_logout(Request $request)
     {
-        
+
         $isSeller = $request->user()->token()->revoke();
         if($isSeller){
             $success['message'] = "Successfully logged out.";
@@ -251,15 +251,15 @@ class AuthController extends ResponseController
             $error = "Something went wrong.";
             return $this->sendResponse($error);
         }
-            
-        
+
+
     }
 
     //getseller
     public function getSeller(Request $request)
     {
         $seller = $request->user();
-        
+
         if($seller){
             return $this->sendResponse($seller);
         }
@@ -297,7 +297,7 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            return $this->sendError($validator->errors());       
+            return $this->sendError($validator->errors());
         }
 
         $input = $request->all();
@@ -315,11 +315,11 @@ class AuthController extends ResponseController
         }
         else{
             $error = "Sorry! Registration is not successfull.";
-            return $this->sendError($error, 401); 
+            return $this->sendError($error, 401);
         }
-        
+
     }
-    
+
     //login admin
     public function admin_login(Request $request)
     {
@@ -329,7 +329,7 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            return $this->sendError($validator->errors());       
+            return $this->sendError($validator->errors());
         }
 
         $credentials = request(['email', 'password']);
@@ -358,8 +358,8 @@ class AuthController extends ResponseController
             $error = "Something went wrong.";
             return $this->sendResponse($error);
         }
-            
-        
+
+
     }
 
     //getadmin
@@ -431,9 +431,9 @@ public function courier_signup(Request $request)
     }
     else{
         $error = "Sorry! Registration is not successfull.";
-        return $this->sendError($error, 401); 
+        return $this->sendError($error, 401);
     }
-    
+
 }
 
 //login courier
@@ -445,7 +445,7 @@ public function courier_login(Request $request)
     ]);
 
     if($validator->fails()){
-        return $this->sendError($validator->errors());       
+        return $this->sendError($validator->errors());
     }
 
     $credentials = request(['email', 'password']);
@@ -467,7 +467,7 @@ public function courier_login(Request $request)
 //logout courier
 public function courier_logout(Request $request)
 {
-    
+
     $isCourier = $request->user()->token()->revoke();
     if($isCourier){
         $success['message'] = "Successfully logged out.";
@@ -477,15 +477,15 @@ public function courier_logout(Request $request)
         $error = "Something went wrong.";
         return $this->sendResponse($error);
     }
-        
-    
+
+
 }
 
 //getcourier
 public function getCourier(Request $request)
 {
     $courier = $request->user();
-    
+
     if($courier){
         return $this->sendResponse($courier);
     }
