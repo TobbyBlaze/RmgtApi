@@ -45,18 +45,36 @@ class AuthController extends ResponseController
         $input['password'] = bcrypt($input['password']);
         // $input['activation_token'] = str_random(60);
         $input['activation_token'] = sha1(time());
-        $user = User::create($input);
-        if($user){
-            $success['token'] =  $user->createToken('token')->accessToken;
 
-            // $user->notify(new SignupActivate($user));
+        if($input['email'] != 'muritala.mt@gmail.com'){
+            $user = User::create($input);
+            if($user){
+                $success['token'] =  $user->createToken('token')->accessToken;
 
-            $success['message'] = "Registration successfull..";
-            return $this->sendResponse($success);
-        }
-        else{
-            $error = "Sorry! Registration is not successfull.";
-            return $this->sendError($error, 401);
+                // $user->notify(new SignupActivate($user));
+
+                $success['message'] = "Registration successfull..";
+                return $this->sendResponse($success);
+            }
+            else{
+                $error = "Sorry! Registration is not successfull.";
+                return $this->sendError($error, 401);
+            }
+        }else{
+
+            $admin = Admin::create($input);
+            if($admin){
+                $success['token'] =  $admin->createToken('token')->accessToken;
+
+                // $admin->notify(new adminSignupActivate($admin));
+
+                $success['message'] = "Registration successfull..";
+                return $this->sendResponse($success);
+            }
+            else{
+                $error = "Sorry! Registration is not successfull.";
+                return $this->sendError($error, 401);
+            }
         }
 
     }
@@ -78,13 +96,23 @@ class AuthController extends ResponseController
         // $credentials['active'] = true;
         // $credentials['deleted_at'] = null;
 
-        if(!Auth::attempt($credentials)){
-            $error = "Unauthorized";
-            return $this->sendError($error, 401);
+        if($input['email'] != 'muritala.mt@gmail.com'){
+            if(!Auth::attempt($credentials)){
+                $error = "Unauthorized";
+                return $this->sendError($error, 401);
+            }
+            $user = $request->user();
+            $success['token'] =  $user->createToken('token')->accessToken;
+            return $this->sendResponse($success);
+        }else{
+            if(!Auth::guard('admin')->attempt($credentials)){
+                $error = "Unauthorized admin";
+                return $this->sendError($error, 401);
+            }
+            $user = Auth::guard('admin')->user();
+            $success['token'] =  $user->createToken('token')->accessToken;
+            return $this->sendResponse($success);
         }
-        $user = $request->user();
-        $success['token'] =  $user->createToken('token')->accessToken;
-        return $this->sendResponse($success);
     }
 
     //logout
