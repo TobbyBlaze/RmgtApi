@@ -78,7 +78,7 @@ Route::group([ 'prefix' => 'auth'], function (){
     });
 
     //Admin
-    Route::group(['middleware' => ['auth:admin-api', 'auth.admin']], function() {
+    Route::group(['middleware' => ['auth:admin-api', 'auth.admin'], 'namespace' => 'App\Http\Controllers'], function() {
         Route::get('a-logout', 'API\AuthController@admin_logout');
         Route::get('getadmin', 'API\AuthController@getAdmin');
 
