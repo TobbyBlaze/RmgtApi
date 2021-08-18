@@ -3,12 +3,12 @@
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
-use App\User;
-use App\Admin;
+// use App\User;
+// use App\Admin;
 
 use Illuminate\Support\Facades\Input;
 
-use Stevebauman\Location\Facades\Location;
+// use Stevebauman\Location\Facades\Location;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,29 +129,29 @@ Route::any ( 'searchSellers', 'FindController@sellers');
 Route::post('/charge', 'CheckoutController@charge');
 
 
-Route::get('location', function () {
+// Route::get('location', function () {
 
-    $ipaddress = '';
-    if (isset($_SERVER['HTTP_CLIENT_IP']))
-        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    else if(isset($_SERVER['HTTP_X_FORWARDED']))
-        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
-        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-    else if(isset($_SERVER['HTTP_FORWARDED']))
-        $ipaddress = $_SERVER['HTTP_FORWARDED'];
-    else if(isset($_SERVER['REMOTE_ADDR']))
-        $ipaddress = $_SERVER['REMOTE_ADDR'];
-    else
-        $ipaddress = request()->ip();
+//     $ipaddress = '';
+//     if (isset($_SERVER['HTTP_CLIENT_IP']))
+//         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+//     else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+//         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//     else if(isset($_SERVER['HTTP_X_FORWARDED']))
+//         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+//     else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+//         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+//     else if(isset($_SERVER['HTTP_FORWARDED']))
+//         $ipaddress = $_SERVER['HTTP_FORWARDED'];
+//     else if(isset($_SERVER['REMOTE_ADDR']))
+//         $ipaddress = $_SERVER['REMOTE_ADDR'];
+//     else
+//         $ipaddress = request()->ip();
 
-    // $ip = '50.90.0.1';
-    // $ip = \Request::ip();
-    // $ip = request()->ip();
-    $data = \Location::get($ipaddress);
-    // dd($data);
-    return response()->json($data);
+//     // $ip = '50.90.0.1';
+//     // $ip = \Request::ip();
+//     // $ip = request()->ip();
+//     $data = \Location::get($ipaddress);
+//     // dd($data);
+//     return response()->json($data);
 
-});
+// });
