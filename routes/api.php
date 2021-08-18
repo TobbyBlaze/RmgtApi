@@ -24,7 +24,7 @@ use Stevebauman\Location\Facades\Location;
 Route::get('trades', 'TradeController@index');
 
 Route::group([ 'prefix' => 'auth'], function (){
-    Route::group(['middleware' => ['guest:api'], 'namespace' => 'App\Http\Controllers\API'], function () {
+    Route::group(['middleware' => ['guest:api'], 'namespace' => 'App\Http\Controllers'], function () {
         Route::post('login', 'API\AuthController@login');
         Route::post('signup', 'API\AuthController@signup');
 
