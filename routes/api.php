@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 // use App\Models\User;
-// use App\Admin;
+// use App\Models\Admin;
 
 use Illuminate\Support\Facades\Input;
 
@@ -37,7 +37,7 @@ Route::group([ 'prefix' => 'auth'], function (){
         // Route::get('/', 'JournalController@index');
 
     });
-    Route::group(['middleware' => ['auth:api']], function() {
+    Route::group(['middleware' => ['auth:api'], 'namespace' => 'App\Http\Controllers'], function() {
         Route::get('logout', 'API\AuthController@logout');
 
         Route::get('getuser', 'API\AuthController@getUser');

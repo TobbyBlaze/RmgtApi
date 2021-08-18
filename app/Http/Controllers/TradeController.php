@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Trade;
 use App\Models\User;
-use App\Admin;
+use App\Models\Admin;
 use Auth;
 use DB;
 

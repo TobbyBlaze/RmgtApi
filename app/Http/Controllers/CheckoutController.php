@@ -15,7 +15,7 @@ use App\Cart;
 use App\Good;
 use App\Sale;
 use App\Seller;
-use App\Admin;
+use App\Models\Admin;
 use Auth;
 use DB;
 
