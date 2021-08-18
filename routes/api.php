@@ -55,7 +55,7 @@ Route::group([ 'prefix' => 'auth'], function (){
         Route::any('deletejournal/{id}', 'JournalController@destroy');
 
         //Trades
-        Route::get('/', 'TradeController@index');
+        // Route::get('/', 'TradeController@index');
         Route::get('trades', 'TradeController@index');
         // Route::get('trades/{id}', 'TradelController@show');
         // Route::resource('showtrades', 'TradeController');
