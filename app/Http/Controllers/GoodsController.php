@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Good;
 use App\viewGoods;
 use App\Review;
-use App\User;
+use App\Models\User;
 use App\Seller;
 use App\Category;
 use Auth;
@@ -52,7 +52,7 @@ class GoodsController extends Controller
         ->first();
         // $sId = 2;
         // $cId = 2;
-        
+
         if($sId != null && $cId != null){
             $personalGoods = Good::orderBy('goods.rating', 'desc')
             ->where('goods.seller_id', $sId->sellerID)
@@ -70,7 +70,7 @@ class GoodsController extends Controller
             $personalGoods = Good::orderBy('goods.updated_at', 'desc')
             ->paginate(5);
         }
-        
+
 
         $newGoods = Good::orderBy('goods.updated_at', 'desc')
         ->paginate(5);
@@ -247,7 +247,7 @@ class GoodsController extends Controller
         ], $messages);
 
         if($request->hasFile('image')){
-            
+
             foreach ($request->file('image') as $sinfile){
                 $filenameWithExt = $sinfile->getClientOriginalName();
                 $sinfile->move(public_path().'/file/', $filenameWithExt);
@@ -307,7 +307,7 @@ class GoodsController extends Controller
             $good->seller_name = $user->name;
             $good->countryName = $user->countryName;
             $good->cityName = $user->cityName;
-            
+
             $good->save();
 
             return response()->json($good, 201);
@@ -334,7 +334,7 @@ class GoodsController extends Controller
             $ipaddress = $_SERVER['REMOTE_ADDR'];
         else
             $ipaddress = '';
-        
+
         $location = \Location::get($ipaddress);
 
         $relatedGoods = Good::orderBy('goods.updated_at', 'desc')
@@ -365,13 +365,13 @@ class GoodsController extends Controller
         Good::where('id', '=', $id)
         ->update([
             // Increment the view counter field
-            'views' => 
+            'views' =>
             $good->views + 1        ,
             // Prevent the updated_at column from being refreshed every time there is a new view
-            'updated_at' => \DB::raw('updated_at')   
+            'updated_at' => \DB::raw('updated_at')
         ]);
 
-        
+
 
         // $location = \Location::get($ipaddress);
 
@@ -391,7 +391,7 @@ class GoodsController extends Controller
         // }
 
         $category = Category::where('sub_category', $good->category)->first();
-        
+
         $viewGood = new viewGoods;
         if($user != null){
             $viewGood->userId = $user->id;
@@ -453,7 +453,7 @@ class GoodsController extends Controller
         $this->validate($request, ['name' => 'required']);
 
         if($request->hasFile('image')){
-            
+
             foreach ($request->file('image') as $sinfile){
                 $filenameWithExt = $sinfile->getClientOriginalName();
                 $sinfile->move(public_path().'/file/', $filenameWithExt);
@@ -503,7 +503,7 @@ class GoodsController extends Controller
             $good->seller_name = $user->name;
             $good->countryName = $user->countryName;
             $good->cityName = $user->cityName;
-            
+
             $good->save();
 
             return response()->json($good, 201);
@@ -514,7 +514,7 @@ class GoodsController extends Controller
     public function destroy($id)
     {
         $good = Good::find($id);
-        
+
         if(Auth::user()->id === $good->seller_id){
             // Storage::delete('public/files/documents/'.$good->file);
             // Storage::delete('public/files/images/'.$good->image);

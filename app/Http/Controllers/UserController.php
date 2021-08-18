@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Good;
 use App\Cart;
 // use App\Order;
-use App\User;
+use App\Models\User;
 use App\Seller;
 use App\Notifications\NewReview;
 use App\Notifications\NewCart;
@@ -25,7 +25,7 @@ class UserController extends Controller
             $profile_data = [
                 'user' => $user
             ];
-            
+
             return response()->json($profile_data, 201);
         }
     }
@@ -52,8 +52,8 @@ class UserController extends Controller
 
         $user->save();
         return response()->json($user, 201);
-        
-        
+
+
     }
 
     public function updateUserPassword(Request $request)
@@ -73,7 +73,7 @@ class UserController extends Controller
             $error = 'User password could not be updated';
             return response()->json($error, 201);
         }
-      
+
     }
 
     public function updateSeller(Request $request)
@@ -93,7 +93,7 @@ class UserController extends Controller
             $extension = $request->file('file')->getClientOriginalExtension();
             $filenameToStore = $filename.'_'.time().'.'.$extension;
             //$path = $request->file('file')->storeAs('public/files/documents', $filenameToStore);
-            
+
             if($extension == "jpg" || $extension == "jpeg" || $extension == "png" || $extension == "gif"){
                 $path = $request->file('file')->storeAs('public/users-avatar', $filenameToStore);
             }else{
@@ -119,18 +119,18 @@ class UserController extends Controller
             //$post->document = $filenameToStore;
 
             //$extension = $request->file('file')->getClientOriginalExtension();
-            
+
             if($extension == "jpg" || $extension == "jpeg" || $extension == "png" || $extension == "gif"){
                 $user->avatar = $filenameToStore;
             }else{
 
             }
-            
+
             $user->save();
 
             return response()->json($user, 201);
-            
-            
+
+
         }else{
             $filenameToStore = 'NoFile';
 
@@ -149,7 +149,7 @@ class UserController extends Controller
             $user->department = $request->input('department');
             $user->school = $request->input('school');
             $user->college = $request->input('college');
-            
+
             $user->save();
 
             return response()->json($user, 201);

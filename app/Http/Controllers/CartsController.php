@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Good;
 use App\Cart;
 use App\Review;
-use App\User;
+use App\Models\User;
 use Auth;
 use DB;
 
@@ -17,13 +17,13 @@ class CartsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         $carts = Cart::orderBy('carts.updated_at', 'desc')
         ->where('carts.user_id', $user->id)
         ->paginate(20);
 
         $cartsNum = Cart::where('carts.user_id', $user->id)->get()->count();
-        
+
         $data = [
 
             'carts'=>$carts,
@@ -60,12 +60,12 @@ class CartsController extends Controller
             $cart->user_id = auth()->user()->id;
             $cart->good_id = $request->input('good_id');
             $cart->seller_id = $request->input('seller_id');
-            
+
             $cart->image = $request->input('image');
-            
+
             $cart->save();
         }
-        
+
         return response()->json($cart, 201);
     }
 
@@ -94,14 +94,14 @@ class CartsController extends Controller
         $cart->price = $request->input('price');
         $cart->category = $request->input('category');
         $cart->user_id = auth()->user()->id;
-        
+
         $cart->save();
     }
 
     public function destroy($id)
     {
         $cart = Cart::find($id);
-        
+
         $cart->delete();
 
         return response()->json($cart, 201);

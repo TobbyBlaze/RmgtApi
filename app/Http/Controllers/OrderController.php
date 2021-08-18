@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Good;
 use App\Cart;
 use App\Review;
-use App\User;
+use App\Models\User;
 use App\Order;
 use App\OrderProduct;
 use Auth;
@@ -21,7 +21,7 @@ class OrderController extends Controller
         $this->middleware('auth');
         // $this->middleware('cors');
     }
-    
+
     public function index()
     {
         $user = Auth::user();
@@ -48,9 +48,9 @@ class OrderController extends Controller
     {
         // $cart = Cart::find($id);
         $user = User::find(auth::user()->id);
-       
+
         $order = new Order;
-        
+
         $order->user_id = $user->id;
         $order->first_name = $request->input('first_name');
         $order->last_name = $request->input('last_name');
@@ -64,7 +64,7 @@ class OrderController extends Controller
         $order->email = $request->input('email');
 
         $order->save();
-   
+
         $cart = Cart::orderBy('carts.updated_at', 'desc')
         // ->where('carts.user_id', $user->id)
         ->get();
@@ -79,7 +79,7 @@ class OrderController extends Controller
     public function viorder($id, Request $request)
     {
         $orderGoods = Order::find($id);
-        
+
         $data = [
             'orderGoods'=>$orderGoods,
         ];

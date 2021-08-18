@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Good;
 use App\Review;
-use App\User;
+use App\Models\User;
 use App\Sale;
 use Auth;
 use DB;
@@ -19,7 +19,7 @@ class ReviewsController extends Controller
     {
         // $user = $request->user();
         $good = Good::find($id);
-        
+
         $reviews = Review::orderBy('reviews.updated_at', 'desc')
         ->where('reviews.good_id', $good->id)
         ->paginate(20);
@@ -64,16 +64,16 @@ class ReviewsController extends Controller
             $review->user_name = $user->name;
             $review->good_id = $request->input('good_id');
             // $review->good_id = $good->id;
-            
+
             $review->save();
 
             if($review->rating){
                 Good::where('id', '=', $review->good_id)
                 ->update([
-                    'rating' => 
+                    'rating' =>
                     (($good->rating * $goodNum) + $review->rating)/($goodNum + 1)     ,
                     // Prevent the updated_at column from being refreshed every time there is a new view
-                    'updated_at' => \DB::raw('updated_at')   
+                    'updated_at' => \DB::raw('updated_at')
                 ]);
             }
 
@@ -88,7 +88,7 @@ class ReviewsController extends Controller
             ];
             return response()->json($data, 201);
         }
-        
+
     }
 
     public function show($id, Request $request)
@@ -115,7 +115,7 @@ class ReviewsController extends Controller
         $review->body = $request->input('body');
         $review->user_id = auth()->user()->id;
         $review->good_id = $good->id;
-        
+
         $review->save();
 
         return response()->json($review, 201);
@@ -124,7 +124,7 @@ class ReviewsController extends Controller
     public function destroy($id)
     {
         $review = Review::find($id);
-        
+
         if(auth()->user()->id === $review->user_id){
             $review->delete();
             return response()->json($review, 201);

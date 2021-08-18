@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Good;
 use App\Wish;
 use App\Review;
-use App\User;
+use App\Models\User;
 use Auth;
 use DB;
 
@@ -17,13 +17,13 @@ class wishController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         $wishes = Wish::orderBy('wishes.updated_at', 'desc')
         ->where('wishes.user_id', $user->id)
         ->paginate(20);
 
         $wishesNum = Wish::where('wishes.user_id', $user->id)->get()->count();
-        
+
         $data = [
             'wishes'=>$wishes,
             'wishesNum'=>$wishesNum,
@@ -35,7 +35,7 @@ class wishController extends Controller
 
     public function store(Request $request)
     {
-        
+
         // $wish_good_id = $request->input('good_id');
         // $wish_size = $request->input('size');
         // $wish_color = $request->input('color');
@@ -55,9 +55,9 @@ class wishController extends Controller
         //     $wish->color_image = $request->input('color_image');
         //     $wish->user_id = auth()->user()->id;
         //     $wish->good_id = $request->input('good_id');
-            
+
         //     $wish->image = $request->file('image');
-            
+
         //     $wish->save();
         // }
 
@@ -76,9 +76,9 @@ class wishController extends Controller
             $wish->category = $request->input('category');
             $wish->user_id = auth()->user()->id;
             $wish->good_id = $request->input('good_id');
-            
+
             $wish->image = $request->file('image');
-            
+
             $wish->save();
 
             return response()->json($wish, 201);
@@ -109,14 +109,14 @@ class wishController extends Controller
         $wish->price = $request->input('price');
         $wish->category = $request->input('category');
         $wish->user_id = auth()->user()->id;
-        
+
         $wish->save();
     }
 
     public function destroy($id)
     {
         $wish = Wish::find($id);
-        
+
         $wish->delete();
 
         return response()->json($wish, 201);

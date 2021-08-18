@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Ads;
 use App\viewAds;
-use App\User;
+use App\Models\User;
 use App\Notifications\NewCart;
 use App\Notifications\NewReview;
 use Auth;
@@ -36,7 +36,7 @@ class AdsController extends Controller
             $ipaddress = $_SERVER['REMOTE_ADDR'];
         else
             $ipaddress = '';
-        
+
         $location = \Location::get($ipaddress);
 
         $city = $request->input('city');
@@ -148,7 +148,7 @@ class AdsController extends Controller
         ], $messages);
 
         if($request->hasFile('image')){
-            
+
             foreach ($request->file('image') as $sinfile){
                 $filenameWithExt = $sinfile->getClientOriginalName();
                 $sinfile->move(public_path().'/file/', $filenameWithExt);
@@ -194,7 +194,7 @@ class AdsController extends Controller
             $ad->countryName = $request->input('countryName'); //$user->countryName;
             $ad->stateName = $request->input('stateName'); //$user->stateName;
             $ad->cityName = $request->input('cityName'); //$user->cityName;
-            
+
             $ad->save();
 
             return response()->json($ad, 201);
@@ -227,10 +227,10 @@ class AdsController extends Controller
         Ads::where('id', '=', $id)
         ->update([
             // Increment the view counter field
-            'views' => 
+            'views' =>
             $ad->views + 1        ,
             // Prevent the updated_at column from being refreshed every time there is a new view
-            'updated_at' => \DB::raw('updated_at')   
+            'updated_at' => \DB::raw('updated_at')
         ]);
 
         $ipaddress = '';
@@ -323,7 +323,7 @@ class AdsController extends Controller
         //return 123;
 
         if($request->hasFile('image')){
-            
+
             foreach ($request->file('image') as $sinfile){
                 $filenameWithExt = $sinfile->getClientOriginalName();
                 $sinfile->move(public_path().'/file/', $filenameWithExt);
@@ -355,7 +355,7 @@ class AdsController extends Controller
             $ad->category = $request->input('category');
             $ad->quantity = $request->input('quantity');
             $ad->seller_id = Auth::user()->id;
-            
+
             $ad->save();
 
             return response()->json($ad, 201);
@@ -366,7 +366,7 @@ class AdsController extends Controller
     public function destroy($id)
     {
         $ad = Ads::find($id);
-        
+
         if(Auth::user()->id === $ad->seller_id){
             // Storage::delete('public/files/documents/'.$ad->file);
             // Storage::delete('public/files/images/'.$ad->image);

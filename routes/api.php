@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
-// use App\User;
+// use App\Models\User;
 // use App\Admin;
 
 use Illuminate\Support\Facades\Input;

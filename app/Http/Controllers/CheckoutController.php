@@ -9,7 +9,7 @@ use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 
-use App\User;
+use App\Models\User;
 use App\Order;
 use App\Cart;
 use App\Good;
@@ -29,7 +29,7 @@ class CheckoutController extends Controller
         try {
             // Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             Stripe::setApiKey('sk_test_51FyXZOIfMsn8pOBN2CZG6KzUcUgWlySQBGLW8rP9x7ZL5P32nIyuoPfSG3VPDDqylbhmFYGIF0tuV5whXP7nGeUS00lHF870xd');
-        
+
             $customer = Customer::create(array(
                 // 'email' => $request->stripeEmail,
                 'email' => $user->email,
@@ -64,12 +64,12 @@ class CheckoutController extends Controller
 
                 Good::where('id', '=', $cart->good_id)
                 ->update([
-                    'quantity' => 
+                    'quantity' =>
                     $good->quantity - $cart->quantity        ,
-                    'purchases' => 
+                    'purchases' =>
                     $good->purchases + 1        ,
                     // Prevent the updated_at column from being refreshed every time there is a new view
-                    'updated_at' => \DB::raw('updated_at')   
+                    'updated_at' => \DB::raw('updated_at')
                 ]);
 
                 $sellerCash = 0.9 * $cart->price;
@@ -77,26 +77,26 @@ class CheckoutController extends Controller
 
                 Seller::where('id', '=', $cart->seller_id)
                 ->update([
-                    'account_balance' => 
+                    'account_balance' =>
                     $seller->account_balance + $sellerCash      ,
-                    'sales' => 
+                    'sales' =>
                     $seller->sales + 1      ,
                     // Prevent the updated_at column from being refreshed every time there is a new view
-                    'updated_at' => \DB::raw('updated_at')   
+                    'updated_at' => \DB::raw('updated_at')
                 ]);
 
                 Admin::where('id', '=', '1')
                 ->update([
-                    'account_balance' => 
+                    'account_balance' =>
                     $admin->account_balance + $adminCash      ,
-                    'sales' => 
+                    'sales' =>
                     $admin->sales + 1      ,
                     // Prevent the updated_at column from being refreshed every time there is a new view
-                    'updated_at' => \DB::raw('updated_at')   
+                    'updated_at' => \DB::raw('updated_at')
                 ]);
 
                 $sale = new Sale;
-        
+
                 $sale->user_id = $user->id;
                 $sale->user_name = $request->input('first_name');
                 $sale->seller_id = $seller->id;
@@ -113,7 +113,7 @@ class CheckoutController extends Controller
                 $sale->good_color = $cart->color;
                 $sale->good_image = $cart->image;
                 $sale->good_price = $cart->price;
-                
+
                 $sale->save();
             }
 
@@ -125,7 +125,7 @@ class CheckoutController extends Controller
             ));
 
             $order = new Order;
-        
+
             $order->user_id = $user->id;
             $order->first_name = $request->input('first_name');
             $order->last_name = $request->input('last_name');
@@ -154,7 +154,7 @@ class CheckoutController extends Controller
                 'order' => $order,
             ];
 
-        
+
             return response()->json($data,200);
         } catch (\Exception $ex) {
             return $ex->getMessage();

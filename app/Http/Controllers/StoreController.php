@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Good;
 // use App\Cart;
 use App\Review;
-use App\User;
+use App\Models\User;
 use App\Seller;
 use Auth;
 use DB;

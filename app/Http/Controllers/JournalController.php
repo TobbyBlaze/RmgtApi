@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 use App\Journal;
-use App\User;
+use App\Models\User;
 use Auth;
 use DB;
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
-use App\User;
+use App\Models\User;
 use App\PasswordReset;
 
 class PasswordResetController extends Controller
@@ -22,7 +22,7 @@ class PasswordResetController extends Controller
         $request->validate([
             'email' => 'required|string|email',
         ]);
-        
+
         // $mail = $request->email;
         // $credentials = request(['email']);
         $user = User::where('email', $request->email)->first();
