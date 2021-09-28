@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Journal;
 use App\Models\User;
+use App\Models\Admin;
 use Auth;
 use DB;
+
+// use Illuminate\Support\Facades\Crypt;
 
 class JournalController extends Controller
 {
     public function index(Request $request)
     {
         $user = User::find(Auth::user()->id);
+        // if($user->email == 'muritala.mt@gmail.com'){
+        //     $user = Admin::find(Auth::user()->id);
+        // }
         // $user1 = $request->user();
         // $user_id = Auth::user()->id;
         // $user_name = Auth::user()->name;
@@ -45,6 +51,8 @@ class JournalController extends Controller
             $filenameToStore = 'NoFile';
 
             //create journal
+
+            $encrypted = Crypt::encryptString('Hello world.');
 
             $journal = new Journal;
             $journal->journal = $request->input('journal');

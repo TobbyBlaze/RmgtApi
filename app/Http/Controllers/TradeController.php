@@ -15,7 +15,7 @@ class tradeController extends Controller
 {
     public function index(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        // $user = User::find(Auth::user()->id);
         // $user1 = $request->user();
         // $user_id = Auth::user()->id;
         // $user_name = Auth::user()->name;
@@ -25,7 +25,7 @@ class tradeController extends Controller
         ->paginate(10);
 
         $data = [
-            'user'=>$user,
+            // 'user'=>$user,
             // 'user1'=>$user1,
             // 'user_id'=>$user_id,
             // 'user_name'=>$user_name,

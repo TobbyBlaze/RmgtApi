@@ -20,8 +20,9 @@ use Illuminate\Support\Facades\Input;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('trades', 'TradeController@index');
+Route::group(['namespace' => 'App\Http\Controllers'], function() {
+    Route::get('trades', 'TradeController@index');
+});
 
 Route::group([ 'prefix' => 'auth'], function (){
     Route::group(['middleware' => ['guest:api'], 'namespace' => 'App\Http\Controllers'], function () {
