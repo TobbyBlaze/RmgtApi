@@ -52,7 +52,7 @@ class JournalController extends Controller
 
             //create journal
 
-            $encrypted = Crypt::encryptString('Hello world.');
+            // $encrypted = Crypt::encryptString('Hello world.');
 
             $journal = new Journal;
             $journal->journal = $request->input('journal');
