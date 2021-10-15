@@ -17,11 +17,11 @@ class JournalController extends Controller
 {
     public function index(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        // $user = User::find(Auth::user()->id);
         // if($user->email == 'muritala.mt@gmail.com'){
         //     $user = Admin::find(Auth::user()->id);
         // }
-        // $user1 = $request->user();
+        $user = $request->user();
         // $user_id = Auth::user()->id;
         // $user_name = Auth::user()->name;
 
