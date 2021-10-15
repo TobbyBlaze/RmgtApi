@@ -58,7 +58,7 @@ class JournalController extends Controller
             $journal = new Journal;
             $journal->journal = $request->input('journal');
             $journal->user_id = $user->id;
-            $journal->user_name = $user->name;
+            // $journal->user_name = $user->name;
 
             // return response()->json($journal, 201);
 

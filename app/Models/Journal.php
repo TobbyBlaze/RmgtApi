@@ -24,7 +24,7 @@ class Journal extends Model
 	 */
 	protected $encryptable = [
 		// 'id',
-        'user_id',
+        // 'user_id',
         // 'user_name',
         'journal',
 	];
