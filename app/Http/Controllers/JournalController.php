@@ -53,6 +53,7 @@ class JournalController extends Controller
             //create journal
 
             // $encrypted = Crypt::encryptString('Hello world.');
+            return response()->json([$request->input('journal'), $user], 201);
 
             $journal = new Journal;
             $journal->journal = $request->input('journal');
