@@ -15,7 +15,7 @@ class CreateJournalsTable extends Migration
     {
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('user_name')->nullable();
             $table->string('journal');
             $table->timestamps();

@@ -60,7 +60,7 @@ class JournalController extends Controller
             $journal->user_id = $user->id;
             $journal->user_name = $user->name;
 
-            return response()->json($journal, 201);
+            // return response()->json($journal, 201);
 
             $journal->save();
 
